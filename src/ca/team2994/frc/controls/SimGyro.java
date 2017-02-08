@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
 /**
  *
  * @author Mike
+ * 
+ * Modified by Jack to default to angle of 0 degrees.
  */
 public class SimGyro extends AnalogGyro {
     private double resetAdjustment;
@@ -23,7 +25,7 @@ public class SimGyro extends AnalogGyro {
     }
     
     public SimGyro(int channel) {
-        this(channel, 90.0);
+        this(channel, 0);
     }
     
     public SimGyro(AnalogInput channel, double initAngle) {
@@ -57,6 +59,6 @@ public class SimGyro extends AnalogGyro {
     }
     
     public void reset() {
-        this.reset(90);
+        this.reset(0);
     }
 }

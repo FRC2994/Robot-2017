@@ -19,21 +19,21 @@ public class DriveStraight implements AutoCommand {
 		Subsystems.leftDriveEncoder.reset();
 		Subsystems.rightDriveEncoder.reset();
 		// Set up the desired number of units.
-		Subsystems.encoderPID.setDesiredValue(distance);
+		Subsystems.drivePID.setDesiredValue(distance);
 		// Reset the encoder PID to a reasonable state.
-		Subsystems.encoderPID.resetErrorSum();
-		Subsystems.encoderPID.resetPreviousVal();
+		Subsystems.drivePID.resetErrorSum();
+		Subsystems.drivePID.resetPreviousVal();
 		// Used to make sure that the PID doesn't bail out as done
 		// right away (we know both the distances are zero from the
 		// above reset).
-		Subsystems.encoderPID.calcPID(0);
+		Subsystems.drivePID.calcPID(0);
 		System.out.println("DriveStraight Init");
 	}
 	
 	@Override
 	public boolean tick() {
-		if (!Subsystems.encoderPID.isDone()) {
-			double driveVal = Subsystems.encoderPID.calcPID((Subsystems.leftDriveEncoder.getDistance() + Subsystems.rightDriveEncoder.getDistance()) / 2.0);
+		if (!Subsystems.drivePID.isDone()) {
+			double driveVal = Subsystems.drivePID.calcPID((Subsystems.leftDriveEncoder.getDistance() + Subsystems.rightDriveEncoder.getDistance()) / 2.0);
 			// TODO: Read this from the constants file as "encoderPIDMax"
 			double limitVal = SimLib.limitValue(driveVal, Constants.getConstantAsDouble(Constants.ENCODER_PID_MAX));
 
