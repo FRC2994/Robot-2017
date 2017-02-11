@@ -14,7 +14,10 @@
 	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/opencv-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/WPILib.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/WPILib-sources.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/ash/wpilib/user/java/lib/CTRLib.jar"/>
+=======
+>>>>>>> origin/master
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>

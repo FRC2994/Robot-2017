@@ -1,7 +1,7 @@
 package ca.team2994.frc.autonomous.commands;
 
 import ca.team2994.frc.autonomous.AutoCommand;
-import ca.team2994.robot2017.Subsystems;
+import ca.team2994.frc.controls.GearToggler;
 
 public class GearShift implements AutoCommand {
 
@@ -13,7 +13,7 @@ public class GearShift implements AutoCommand {
 	
 	@Override
 	public void initialize() {
-		Subsystems.robotDrive.gearControl(highGear);
+		GearToggler.setGear(highGear);
 		
 	}
 
