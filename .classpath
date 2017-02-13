@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="guava-18.0.jar"/>
 	<classpathentry kind="lib" path="jmockit-1.14-javadoc.jar"/>
 	<classpathentry kind="lib" path="jmockit-1.14.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/cscore.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/cscore-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/NetworkTables.jar"/>
@@ -14,6 +15,17 @@
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/opencv-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/WPILib.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ASH/wpilib/java/current/lib/WPILib-sources.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/cscore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/cscore-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/NetworkTables.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/NetworkTables-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/opencv.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/opencv-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/java/current/lib/WPILib-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ash/wpilib/user/java/lib/CTRLib.jar"/>
+>>>>>>> origin/master
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>

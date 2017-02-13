@@ -12,23 +12,15 @@ public class Constants
 	private static Properties defaults = new Properties();
 	private static Properties constants = new Properties();
 	
-	/* Property names */
-	// Motor Types
-	public static final String MOTOR_TYPE_DRIVE =				"MOTOR_TYPE_DRIVE";
-	public static final String MOTOR_TYPE_ARM =					"MOTOR_TYPE_ARM";
-	public static final String MOTOR_TYPE_FORKLIFT =			"MOTOR_TYPE_FORKLIFT";
-	public static final String MOTOR_TYPE_CONVEYOR =			"MOTOR_TYPE_CONVEYOR";
+	// CAN
+	public static final String CAN_RIGHT_FRONT_DRIVE =			"CAN_RIGHT_FRONT_DRIVE";
+	public static final String CAN_RIGHT_REAR_DRIVE =			"CAN_RIGHT_REAR_DRIVE";
+	public static final String CAN_LEFT_FRONT_DRIVE = 			"CAN_LEFT_FRONT_DRIVE";
+	public static final String CAN_LEFT_REAR_DRIVE =			"CAN_LEFT_REAR_DRIVE";
+	public static final String CAN_SHOOTER = 					"CAN_SHOOTER";
 	
 	// PWM
-	public static final String PWM_RIGHT_FRONT_DRIVE =			"PWM_RIGHT_FRONT_DRIVE";
-	public static final String PWM_RIGHT_REAR_DRIVE =			"PWM_RIGHT_REAR_DRIVE";
-	public static final String PWM_LEFT_FRONT_DRIVE = 			"PWM_LEFT_FRONT_DRIVE";
-	public static final String PWM_LEFT_REAR_DRIVE =			"PWM_LEFT_REAR_DRIVE";
-	
-	public static final String PWM_RIGHT_ARM =					"PWM_RIGHT_ARM";
-	public static final String PWM_LEFT_ARM =					"PWM_LEFT_ARM";
-	public static final String PWM_FORKLIFT =					"PWM_FORKLIFT";
-	public static final String PWM_CONVEYOR =					"PWM_CONVEYOR";
+	public static final String PWM_INDEXER = "PWM_INDEXER";
 	
 	// DIO
 	public static final String DIO_RIGHT_ENCODER_A =			"DIO_RIGHT_ENCODER_A";
@@ -38,6 +30,7 @@ public class Constants
 	
 	public static final String DIO_SHOOTER_ENCODER_A =			"DIO_SHOOTER_ENCODER_A";
 	public static final String DIO_SHOOTER_ENCODER_B =			"DIO_SHOOTER_ENCODER_B";
+	public static final String SHOOTER_ENCODER_CALIBRATION = 	"SHOOTER_ENCODER_CALIBRATION";
 	
 	// Analog IO
 	public static final String AIO_GYRO_SENSOR =				"AIO_GYRO_SENSOR";
@@ -79,51 +72,36 @@ public class Constants
 	//Double Solenoid Channels
 	public static final String SOLENOID_SHIFTER_CHANNEL1 =		"SOLENOID_SHIFTER_CHANNEL1";
 	public static final String SOLENOID_SHIFTER_CHANNEL2 =		"SOLENOID_SHIFTER_CHANNEL2";
-
-	//Conveyor
-	public static final String CONVEYOR_SPEED =					"CONVEYOR_SPEED";
-	public static final String CONVEYOR_TIME =					"CONVEYOR_TIME";
+	
+	// Shooter
+	public static final String INDEXER_SPEED = "INDEXER_SPEED";
 
 	//Gamepad Buttons
 	
 
 	//Joystick Buttons
-	public static final String JOYSTICK_HIGH_GEAR  =			"JOYSTICK_HIGH_GEAR";
 	public static final String JOYSTICK_CALIBRATE  =			"JOYSTICK_CALIBRATE";
-	
-	// Digital Inputs
-	public static final String NUM_AUTO_SELECT =				"NUM_INPUTS";
-	public static final String FIRST_DIGITAL_SELECT = 			"FIRST_DIGITAL_SELECT";
-	public static final String SECOND_DIGITAL_SELECT = 			"SECOND_DIGITAL_SELECT";
-	
-	public static final String BUTTON_COMPRESSOR_DISABLE = 		"BUTTON_COMPRESSOR_DISABLE";
 
 	static {
-		// PWM
-		defaults.put(MOTOR_TYPE_DRIVE, "0");
-		defaults.put(MOTOR_TYPE_ARM, "0");
-		defaults.put(MOTOR_TYPE_FORKLIFT, "2");
-		defaults.put(MOTOR_TYPE_CONVEYOR, "0");
+		// CAN
+		defaults.put(CAN_RIGHT_FRONT_DRIVE, "1");
+		defaults.put(CAN_RIGHT_REAR_DRIVE, "2");
+		defaults.put(CAN_LEFT_FRONT_DRIVE, "3");
+		defaults.put(CAN_LEFT_REAR_DRIVE, "4");
+		defaults.put(CAN_SHOOTER, "1");
 
 		// PWM
-		defaults.put(PWM_RIGHT_FRONT_DRIVE, "3");
-		defaults.put(PWM_RIGHT_REAR_DRIVE, "2");
-		defaults.put(PWM_LEFT_FRONT_DRIVE, "9");
-		defaults.put(PWM_LEFT_REAR_DRIVE, "8");
-		
-		defaults.put(PWM_RIGHT_ARM, "4");
-		defaults.put(PWM_LEFT_ARM, "5");
-		defaults.put(PWM_FORKLIFT, "11"); // CAN
-		defaults.put(PWM_CONVEYOR, "7");
-		
+		defaults.put(PWM_INDEXER, "0");
+
 		// DIO
-		defaults.put(DIO_RIGHT_ENCODER_A, "9");
-		defaults.put(DIO_RIGHT_ENCODER_B, "8");
-		defaults.put(DIO_LEFT_ENCODER_A, "7");
-		defaults.put(DIO_LEFT_ENCODER_B, "6");
-		
-		defaults.put(DIO_SHOOTER_ENCODER_A, "0");
-		defaults.put(DIO_SHOOTER_ENCODER_B, "1");
+		defaults.put(DIO_RIGHT_ENCODER_A, "0");
+		defaults.put(DIO_RIGHT_ENCODER_B, "1");
+		defaults.put(DIO_LEFT_ENCODER_A, "2");
+		defaults.put(DIO_LEFT_ENCODER_B, "3");
+
+		defaults.put(DIO_SHOOTER_ENCODER_A, "4");
+		defaults.put(DIO_SHOOTER_ENCODER_B, "5");
+		defaults.put(SHOOTER_ENCODER_CALIBRATION, "0.0078125");
 
 		// Analog IO
 		defaults.put(AIO_GYRO_SENSOR, "0");
@@ -137,9 +115,9 @@ public class Constants
 		defaults.put(PCM_SHIFTER_B, "1");
 		
 		//PID
-		defaults.put(SHOOTER_PID_P, "0.006");
-		defaults.put(SHOOTER_PID_I, "0.002");
-		defaults.put(SHOOTER_PID_D, "0.001");
+		defaults.put(SHOOTER_PID_P, "0");
+		defaults.put(SHOOTER_PID_I, "0");
+		defaults.put(SHOOTER_PID_D, "0");
 		// The forklift PID works at encoder-value-scale so we don't need as much accuracy.
 		defaults.put(SHOOTER_PID_E, "5");
 
@@ -165,18 +143,12 @@ public class Constants
 		defaults.put(SOLENOID_SHIFTER_CHANNEL1, "0");
 		defaults.put(SOLENOID_SHIFTER_CHANNEL2, "1");
 		
-		//Conveyor
-		defaults.put(CONVEYOR_SPEED, "0.4");
-		defaults.put(CONVEYOR_TIME,"20");
+		// Shooter
+		defaults.put(INDEXER_SPEED, "0.5");
+		
+		// Joystick buttons
+		defaults.put(JOYSTICK_CALIBRATE, "1");
 
-		//Gamepad Buttons
-		
-		//Joystick Buttons
-		
-		// Digital Inputs
-		// Allows for 8
-		
-		
 		constants.putAll(defaults);
 	}
 	
