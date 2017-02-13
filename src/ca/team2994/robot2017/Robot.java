@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	private Shooter shooter;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -20,6 +22,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		Subsystems.initialize();
+		this.shooter = new Shooter();
 	}
 
 	/**
@@ -29,12 +32,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		shooter.stopLoading();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+
 	}
 
 	/**
@@ -63,7 +66,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		
+		this.shooter.load();
+		this.shooter.setShooterSpeed(0);
 	}
 
 	/**
@@ -71,7 +75,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		Subsystems.shooter.set(-Subsystems.driveJoystick.getY());
+		this.shooter.tick();
 	}
 
 	/**

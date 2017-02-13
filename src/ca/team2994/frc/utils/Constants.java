@@ -30,6 +30,7 @@ public class Constants
 	
 	public static final String DIO_SHOOTER_ENCODER_A =			"DIO_SHOOTER_ENCODER_A";
 	public static final String DIO_SHOOTER_ENCODER_B =			"DIO_SHOOTER_ENCODER_B";
+	public static final String SHOOTER_ENCODER_CALIBRATION = 	"SHOOTER_ENCODER_CALIBRATION";
 	
 	// Analog IO
 	public static final String AIO_GYRO_SENSOR =				"AIO_GYRO_SENSOR";
@@ -87,11 +88,11 @@ public class Constants
 		defaults.put(CAN_RIGHT_REAR_DRIVE, "2");
 		defaults.put(CAN_LEFT_FRONT_DRIVE, "3");
 		defaults.put(CAN_LEFT_REAR_DRIVE, "4");
-		defaults.put(CAN_SHOOTER, "5");
-		
+		defaults.put(CAN_SHOOTER, "1");
+
 		// PWM
 		defaults.put(PWM_INDEXER, "0");
-		
+
 		// DIO
 		defaults.put(DIO_RIGHT_ENCODER_A, "0");
 		defaults.put(DIO_RIGHT_ENCODER_B, "1");
@@ -100,6 +101,7 @@ public class Constants
 
 		defaults.put(DIO_SHOOTER_ENCODER_A, "4");
 		defaults.put(DIO_SHOOTER_ENCODER_B, "5");
+		defaults.put(SHOOTER_ENCODER_CALIBRATION, "0.0078125");
 
 		// Analog IO
 		defaults.put(AIO_GYRO_SENSOR, "0");
@@ -113,9 +115,9 @@ public class Constants
 		defaults.put(PCM_SHIFTER_B, "1");
 		
 		//PID
-		defaults.put(SHOOTER_PID_P, "0.006");
-		defaults.put(SHOOTER_PID_I, "0.002");
-		defaults.put(SHOOTER_PID_D, "0.001");
+		defaults.put(SHOOTER_PID_P, "0");
+		defaults.put(SHOOTER_PID_I, "0");
+		defaults.put(SHOOTER_PID_D, "0");
 		// The forklift PID works at encoder-value-scale so we don't need as much accuracy.
 		defaults.put(SHOOTER_PID_E, "5");
 
