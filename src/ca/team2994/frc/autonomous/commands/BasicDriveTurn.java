@@ -3,7 +3,6 @@ package ca.team2994.frc.autonomous.commands;
 import ca.team2994.frc.autonomous.AutoCommand;
 import ca.team2994.robot2017.Subsystems;
 
-
 public class BasicDriveTurn implements AutoCommand {
 	@Override
 	public void initialize() {
@@ -18,9 +17,9 @@ public class BasicDriveTurn implements AutoCommand {
 	public boolean tick() {
 		// TODO Auto-generated method stub
 		System.out.println(Subsystems.gyroSensor.getAngle());
-		if (Subsystems.gyroSensor.getAngle() <= 90) {
+		if (Subsystems.gyroSensor.getAngle() != 90) {
 			Subsystems.robotDrive.setLeftRightMotorOutputs(1.0, -1.0);
-			System.out.println("Hufflepuff, Slytherin, Ravenclaw and Gryffindor, all the very best friends!");
+			System.out.println("Turned");
 			return true;
 		}
 		return false;
