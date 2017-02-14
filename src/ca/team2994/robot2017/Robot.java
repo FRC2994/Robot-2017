@@ -23,6 +23,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		Subsystems.initialize();
 		this.shooter = new Shooter();
+		
+		Subsystems.driveJoystick.enableButton(3);
+		Subsystems.driveJoystick.enableButton(4);
+		Subsystems.driveJoystick.enableButton(5);
+		Subsystems.driveJoystick.enableButton(6);
+		Subsystems.driveJoystick.enableButton(7);
+		Subsystems.driveJoystick.enableButton(10);
+		Subsystems.driveJoystick.enableButton(11);
 	}
 
 	/**
@@ -68,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		this.shooter.load();
 		this.shooter.setShooterSpeed(0);
+		Subsystems.driveJoystick.enableButton(4);
 	}
 
 	/**
@@ -75,6 +84,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Subsystems.driveJoystick.update();
 		Subsystems.shooter.set(-Subsystems.driveJoystick.getY());
 		this.shooter.tick();
 	}
