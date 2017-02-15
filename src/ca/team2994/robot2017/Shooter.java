@@ -163,10 +163,16 @@ public class Shooter {
 		
 		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
 			resetPID(p, i, d, eps);
+			System.out.println("p = " + p + ", i = " + i + ", d = " + d + ", eps = " + eps);
 		}
 		
 		if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
-			resetPID(0.5, 0.5, 0.5, 5);
+			p = 0.5;
+			i = 0.5;
+			d = 0.5;
+			eps = 5;
+			resetPID(p, i, d, eps);
+			System.out.println("p = " + p + ", i = " + i + ", d = " + d + ", eps = " + eps);
 		}
 	}
 }
