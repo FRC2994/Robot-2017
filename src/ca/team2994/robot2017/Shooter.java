@@ -9,7 +9,7 @@ import ca.team2994.frc.utils.SimPID;
 public class Shooter {
 	double previousRotations;
 	long previousTime;
-	int p, i, d, eps;
+	double p, i, d, eps;
 	
 	public Shooter() {
 		// Reset the encoder PID to a reasonable state.
@@ -27,7 +27,7 @@ public class Shooter {
 		previousTime = System.currentTimeMillis();
 	}
 	
-	public void resetPID(int p, int i, int d, int eps) {
+	public void resetPID(double p, double i, double d, double eps) {
 		shooterPID = new SimPID(p, i, d, eps);
 		// Reset the encoder PID to a reasonable state.
 		shooterPID.resetErrorSum();
@@ -75,22 +75,22 @@ public class Shooter {
 
 		if (driveJoystick.getRawButton(2)) {
 			if (driveJoystick.getEvent(6) == ButtonEntry.EVENT_CLOSED) {
-				eps += 0.1;
+				eps += 5;
 				System.out.println("p value = " + p);
 			}
 			
 			if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_CLOSED) {
-				eps -= 0.1;
+				eps -= 5;
 				System.out.println("p value = " + p);
 			}
 			
 			if (driveJoystick.getEvent(11) == ButtonEntry.EVENT_CLOSED) {
-				eps += 0.01;
+				eps += 1;
 				System.out.println("p value = " + p);
 			}
 			
 			if (driveJoystick.getEvent(10) == ButtonEntry.EVENT_CLOSED) {
-				eps -= 0.01;
+				eps -= 1;
 				System.out.println("p value = " + p);
 			}
 		}
@@ -162,7 +162,7 @@ public class Shooter {
 		}
 		
 		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
-			resetPID(p, i, d, eps);
+			resetPID(0.5, 0.5, 0.5, 5);
 		}
 	}
 }
