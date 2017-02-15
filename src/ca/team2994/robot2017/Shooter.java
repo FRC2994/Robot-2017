@@ -162,6 +162,10 @@ public class Shooter {
 		}
 		
 		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
+			resetPID(p, i, d, eps);
+		}
+		
+		if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
 			resetPID(0.5, 0.5, 0.5, 5);
 		}
 	}

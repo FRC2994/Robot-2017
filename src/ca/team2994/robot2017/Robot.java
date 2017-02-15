@@ -29,6 +29,8 @@ public class Robot extends IterativeRobot {
 		Subsystems.driveJoystick.enableButton(5);
 		Subsystems.driveJoystick.enableButton(6);
 		Subsystems.driveJoystick.enableButton(7);
+		Subsystems.driveJoystick.enableButton(8);
+		Subsystems.driveJoystick.enableButton(9);
 		Subsystems.driveJoystick.enableButton(10);
 		Subsystems.driveJoystick.enableButton(11);
 	}
