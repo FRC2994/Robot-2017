@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 	private Shooter shooter;
+	private Gear gear;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		Subsystems.initialize();
 		this.shooter = new Shooter();
+		this.gear = new Gear();
 		
 		Subsystems.driveJoystick.enableButton(3);
 		Subsystems.driveJoystick.enableButton(4);
@@ -74,8 +76,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		this.shooter.load();
-		this.shooter.setShooterSpeed(0);
+		this.shooter.initTeleop();
 		Subsystems.driveJoystick.enableButton(4);
 	}
 
@@ -85,8 +86,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Subsystems.driveJoystick.update();
+		Subsystems.controlGamepad.update();
 		Subsystems.shooter.set(-Subsystems.driveJoystick.getY());
-		this.shooter.tick();
+		this.shooter.tickTeleop();
+		this.gear.tickTeleop();
 	}
 
 	/**

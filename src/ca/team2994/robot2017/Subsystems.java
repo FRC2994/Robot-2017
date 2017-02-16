@@ -1,5 +1,7 @@
 package ca.team2994.robot2017;
 
+import static ca.team2994.frc.utils.Constants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +17,6 @@ import ca.team2994.frc.controls.EGamepad;
 import ca.team2994.frc.controls.EJoystick;
 import ca.team2994.frc.controls.GearToggler;
 import ca.team2994.frc.controls.SimGyro;
-import static ca.team2994.frc.utils.Constants.*;
 import ca.team2994.frc.utils.SimPID;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -36,6 +37,7 @@ public class Subsystems {
 	public static CANTalon shooter;
 	public static Victor indexer;
 	public static Victor pickup;
+	public static Victor climber;
 	
 	// Drive
 	public static RobotDrive robotDrive;
@@ -48,8 +50,9 @@ public class Subsystems {
 	// Sensor
 	public static SimGyro gyroSensor;
 	
-	//Solenoid - Gear control
+	//Solenoid
 	public static DoubleSolenoid gearShiftSolenoid;
+	public static DoubleSolenoid gearDown;
 
 	// USB
 	public static EJoystick	driveJoystick;
@@ -57,12 +60,9 @@ public class Subsystems {
 	
 	// Power Panel
 	public static PowerDistributionPanel powerPanel;
-	
-	// Bling
-	public static SerialPort blingPort;
-	
+
 	public static Compressor compressor;
- 	
+
  	// PIDs
  	public static SimPID shooterPID;
  	public static SimPID gyroPID;
@@ -82,6 +82,8 @@ public class Subsystems {
 		rightRearDrive = new CANTalon(getConstantAsInt(CAN_LEFT_REAR_DRIVE));
 		shooter = new CANTalon(getConstantAsInt(CAN_SHOOTER));
 		indexer = new Victor(getConstantAsInt(PWM_INDEXER));
+		pickup = new Victor(getConstantAsInt(PWM_PICKUP));
+		climber = new Victor(getConstantAsInt(PWM_CLIMBER));
 
 		// Drive
 		robotDrive = new RobotDrive(leftFrontDrive, leftRearDrive, rightFrontDrive, rightRearDrive);
@@ -106,6 +108,10 @@ public class Subsystems {
 		gearShiftSolenoid = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL), 
 				getConstantAsInt(SOLENOID_SHIFTER_CHANNEL1),
 				getConstantAsInt(SOLENOID_SHIFTER_CHANNEL2));
+		
+		gearDown = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL),
+				getConstantAsInt(SOLENOID_GEAR_CHANNEL1),
+				getConstantAsInt(SOLENOID_GEAR_CHANNEL2));
 
 		gyroSensor = new SimGyro(getConstantAsInt(AIO_GYRO_SENSOR));
 		gyroSensor.initGyro();		

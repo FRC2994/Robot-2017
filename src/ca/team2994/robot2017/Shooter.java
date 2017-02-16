@@ -6,7 +6,7 @@ import static ca.team2994.robot2017.Subsystems.*;
 import ca.team2994.frc.controls.ButtonEntry;
 import ca.team2994.frc.utils.SimPID;
 
-public class Shooter {
+public class Shooter implements Subsystem {
 	double previousRotations;
 	long previousTime;
 	int p, i, d, eps;
@@ -26,7 +26,13 @@ public class Shooter {
 		previousRotations = shooterEncoder.getDistance();
 		previousTime = System.currentTimeMillis();
 	}
-	
+
+	@Override
+	public void initTeleop() {
+		load();
+		setShooterSpeed(0);
+	}
+
 	public void resetPID(int p, int i, int d, int eps) {
 		shooterPID = new SimPID(p, i, d, eps);
 		// Reset the encoder PID to a reasonable state.
@@ -42,8 +48,9 @@ public class Shooter {
 	}
 
 	public double convertMillisToMinutes(long millis){
-		return (millis / 1000.0) / 60.0;
+	   	return (millis / 1000.0) / 60.0;
 	}
+
 	public double calculateSpeed(){
 		double rotations = shooterEncoder.getDistance();
 		long time = System.currentTimeMillis();
@@ -54,6 +61,7 @@ public class Shooter {
 		previousTime = time;
 		return speed;
 	}
+
 	public void load() {
 		Subsystems.indexer.set(getConstantAsDouble(INDEXER_SPEED));
 	}
@@ -66,8 +74,9 @@ public class Shooter {
 		// Set up the desired number of units.
 		shooterPID.setDesiredValue(rpm);
 	}
-	
-	public void tick() {
+
+	@Override
+	public void tickTeleop() {
 		System.out.println(calculateSpeed());
 		setShooterSpeed(1500);
 		
@@ -164,5 +173,9 @@ public class Shooter {
 		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
 			resetPID(p, i, d, eps);
 		}
+	}
+	
+	public void tickTesting() {
+		
 	}
 }
