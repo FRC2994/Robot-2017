@@ -29,31 +29,6 @@ import edu.wpi.first.wpilibj.Victor;
 
 
 public class Subsystems {	
-	// Motors
-	public static CANTalon rightFrontDrive;
-	public static CANTalon rightRearDrive;
-	public static CANTalon leftFrontDrive;
-	public static CANTalon leftRearDrive;
-	public static CANTalon shooter;
-	public static Victor indexer;
-	public static Victor pickup;
-	public static Victor climber;
-	
-	// Drive
-	public static RobotDrive robotDrive;
-
-	// Encoders
-	public static Encoder rightDriveEncoder;
-	public static Encoder leftDriveEncoder;
-	public static EEncoder shooterEncoder;
-
-	// Sensor
-	public static SimGyro gyroSensor;
-	
-	//Solenoid
-	public static DoubleSolenoid gearShiftSolenoid;
-	public static DoubleSolenoid gearDown;
-
 	// USB
 	public static EJoystick	driveJoystick;
 	public static EGamepad controlGamepad;
@@ -63,11 +38,6 @@ public class Subsystems {
 
 	public static Compressor compressor;
 
- 	// PIDs
- 	public static SimPID shooterPID;
- 	public static SimPID gyroPID;
- 	public static SimPID drivePID;
-
  	public static DigitalInput[] inputs;
 
 	/**
@@ -75,77 +45,15 @@ public class Subsystems {
 	 */
 	public static void initialize()
 	{
-		// Motors
-		leftFrontDrive = new CANTalon(getConstantAsInt(CAN_RIGHT_FRONT_DRIVE));
-		leftRearDrive = new CANTalon(getConstantAsInt(CAN_RIGHT_REAR_DRIVE));
-		rightFrontDrive = new CANTalon(getConstantAsInt(CAN_LEFT_FRONT_DRIVE));
-		rightRearDrive = new CANTalon(getConstantAsInt(CAN_LEFT_REAR_DRIVE));
-		shooter = new CANTalon(getConstantAsInt(CAN_SHOOTER));
-		indexer = new Victor(getConstantAsInt(PWM_INDEXER));
-		pickup = new Victor(getConstantAsInt(PWM_PICKUP));
-		climber = new Victor(getConstantAsInt(PWM_CLIMBER));
-
-		// Drive
-		robotDrive = new RobotDrive(leftFrontDrive, leftRearDrive, rightFrontDrive, rightRearDrive);
-		
-		// Encoders
-		rightDriveEncoder = new Encoder(getConstantAsInt(DIO_RIGHT_ENCODER_A), getConstantAsInt(DIO_RIGHT_ENCODER_B), true);
-		leftDriveEncoder = new Encoder(getConstantAsInt(DIO_LEFT_ENCODER_A), getConstantAsInt(DIO_LEFT_ENCODER_B), true);
-		shooterEncoder = new EEncoder(getConstantAsInt(DIO_SHOOTER_ENCODER_A), getConstantAsInt(DIO_SHOOTER_ENCODER_B));
-
 		// USB
 		driveJoystick = new EJoystick(getConstantAsInt(USB_DRIVE_STICK));
 		controlGamepad = new EGamepad(getConstantAsInt(USB_CONTROL_GAMEPAD));
 
 		// Power Panel
 		powerPanel = new PowerDistributionPanel();
-		
+
 		//Compressor
 		compressor = new Compressor();
-
-		
-		//Solenoid - Gear shift
-		gearShiftSolenoid = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL), 
-				getConstantAsInt(SOLENOID_SHIFTER_CHANNEL1),
-				getConstantAsInt(SOLENOID_SHIFTER_CHANNEL2));
-		
-		gearDown = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL),
-				getConstantAsInt(SOLENOID_GEAR_CHANNEL1),
-				getConstantAsInt(SOLENOID_GEAR_CHANNEL2));
-
-		gyroSensor = new SimGyro(getConstantAsInt(AIO_GYRO_SENSOR));
-		gyroSensor.initGyro();		
-		initPID();
-
-		// Set high gear by default
-		GearToggler.setHighGear();
-	}
-	
-	/**
-	 * Public for testing purposes. Initializes the PID controllers.
-	 */
-	public static void initPID() {
-		//PIDs
-		shooterPID = new SimPID(
-				getConstantAsDouble(SHOOTER_PID_P),
-				getConstantAsDouble(SHOOTER_PID_I),
-				getConstantAsDouble(SHOOTER_PID_D),
-				getConstantAsDouble(SHOOTER_PID_E)
-				);
-
-		gyroPID = new SimPID(
-				getConstantAsDouble(GYRO_PID_P),
-				getConstantAsDouble(GYRO_PID_I),
-				getConstantAsDouble(GYRO_PID_D),
-				getConstantAsDouble(GYRO_PID_E)
-				);
-
-		drivePID = new SimPID(
-				getConstantAsDouble(ENCODER_PID_P),
-				getConstantAsDouble(ENCODER_PID_I),
-				getConstantAsDouble(ENCODER_PID_D),
-				getConstantAsDouble(ENCODER_PID_E)
-				);
 	}
 	
 	/**

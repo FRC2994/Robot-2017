@@ -1,16 +1,44 @@
 package ca.team2994.robot2017;
 
-import static ca.team2994.frc.utils.Constants.*;
-import static ca.team2994.robot2017.Subsystems.*;
+import static ca.team2994.frc.utils.Constants.CAN_SHOOTER;
+import static ca.team2994.frc.utils.Constants.DIO_SHOOTER_ENCODER_A;
+import static ca.team2994.frc.utils.Constants.DIO_SHOOTER_ENCODER_B;
+import static ca.team2994.frc.utils.Constants.INDEXER_SPEED;
+import static ca.team2994.frc.utils.Constants.PWM_INDEXER;
+import static ca.team2994.frc.utils.Constants.SHOOTER_ENCODER_CALIBRATION;
+import static ca.team2994.frc.utils.Constants.SHOOTER_PID_D;
+import static ca.team2994.frc.utils.Constants.SHOOTER_PID_E;
+import static ca.team2994.frc.utils.Constants.SHOOTER_PID_I;
+import static ca.team2994.frc.utils.Constants.SHOOTER_PID_P;
+import static ca.team2994.frc.utils.Constants.getConstantAsDouble;
+import static ca.team2994.frc.utils.Constants.getConstantAsInt;
+import static ca.team2994.robot2017.Subsystems.driveJoystick;
+
+import com.ctre.CANTalon;
 
 import ca.team2994.frc.controls.ButtonEntry;
+import ca.team2994.frc.controls.EEncoder;
 import ca.team2994.frc.utils.SimPID;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Victor;
 
-public class Shooter implements Subsystem {
+public class Shooter extends Subsystem {
 	double previousRotations;
 	long previousTime;
 	int p, i, d, eps;
 	
+	CANTalon shooter = new CANTalon(getConstantAsInt(CAN_SHOOTER));
+	Victor indexer = new Victor(getConstantAsInt(PWM_INDEXER));
+	
+	Encoder shooterEncoder = new EEncoder(getConstantAsInt(DIO_SHOOTER_ENCODER_A), getConstantAsInt(DIO_SHOOTER_ENCODER_B));
+	
+	SimPID shooterPID = new SimPID(
+									getConstantAsDouble(SHOOTER_PID_P),
+									getConstantAsDouble(SHOOTER_PID_I),
+									getConstantAsDouble(SHOOTER_PID_D),
+									getConstantAsDouble(SHOOTER_PID_E)
+									);
+
 	public Shooter() {
 		// Reset the encoder PID to a reasonable state.
 		shooterPID.resetErrorSum();
@@ -63,11 +91,11 @@ public class Shooter implements Subsystem {
 	}
 
 	public void load() {
-		Subsystems.indexer.set(getConstantAsDouble(INDEXER_SPEED));
+		indexer.set(getConstantAsDouble(INDEXER_SPEED));
 	}
 	
 	public void stopLoading() {
-		Subsystems.indexer.set(0);
+		indexer.set(0);
 	}
 	
 	public void setShooterSpeed(int rpm) {
@@ -77,6 +105,21 @@ public class Shooter implements Subsystem {
 
 	@Override
 	public void tickTeleop() {
+		
+	}
+	
+	@Override
+	void initTesting() {
+		Subsystems.driveJoystick.enableButton(3);
+		Subsystems.driveJoystick.enableButton(4);
+		Subsystems.driveJoystick.enableButton(5);
+		Subsystems.driveJoystick.enableButton(6);
+		Subsystems.driveJoystick.enableButton(7);
+		Subsystems.driveJoystick.enableButton(10);
+		Subsystems.driveJoystick.enableButton(11);
+	}
+	
+	public void tickTesting() {
 		System.out.println(calculateSpeed());
 		setShooterSpeed(1500);
 		
@@ -173,9 +216,5 @@ public class Shooter implements Subsystem {
 		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
 			resetPID(p, i, d, eps);
 		}
-	}
-	
-	public void tickTesting() {
-		
 	}
 }

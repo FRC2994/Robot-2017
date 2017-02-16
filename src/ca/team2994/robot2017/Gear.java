@@ -1,12 +1,22 @@
 package ca.team2994.robot2017;
 
+import static ca.team2994.frc.utils.Constants.COMPRESSOR_CHANNEL;
+import static ca.team2994.frc.utils.Constants.SOLENOID_GEAR_CHANNEL1;
+import static ca.team2994.frc.utils.Constants.SOLENOID_GEAR_CHANNEL2;
+import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 import static ca.team2994.robot2017.Subsystems.driveJoystick;
 import static ca.team2994.robot2017.Subsystems.gearDown;
 
 import ca.team2994.frc.controls.ButtonEntry;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class Gear implements Subsystem {
+public class Gear extends Subsystem {
+	DoubleSolenoid solenoid = new DoubleSolenoid(
+											getConstantAsInt(COMPRESSOR_CHANNEL),
+											getConstantAsInt(SOLENOID_GEAR_CHANNEL1),
+											getConstantAsInt(SOLENOID_GEAR_CHANNEL2));
+	
 	public enum Position {
 		DOWN,
 		UP
@@ -26,10 +36,10 @@ public class Gear implements Subsystem {
 		// Forward = down
 		// Reverse = up
 		if (pos == Position.DOWN) {
-			gearDown.set(Value.kForward);
+			solenoid.set(Value.kForward);
 		}
 		else if (pos == Position.UP) {
-			gearDown.set(Value.kReverse);
+			solenoid.set(Value.kReverse);
 		}
 	}
 
@@ -51,6 +61,12 @@ public class Gear implements Subsystem {
 
 	@Override
 	public void tickTesting() {
+		
+	}
+
+	@Override
+	void initTesting() {
+		// TODO Auto-generated method stub
 		
 	}
 }

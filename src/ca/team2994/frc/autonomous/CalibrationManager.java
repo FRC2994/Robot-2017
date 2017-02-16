@@ -9,7 +9,7 @@ import ca.team2994.robot2017.Subsystems;
 public class CalibrationManager {
 	
 	private boolean calibrationDone = false;
-	
+
 	public void calibrateInit() {
     	Subsystems.leftDriveEncoder.reset();
     	Subsystems.rightDriveEncoder.reset();

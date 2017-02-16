@@ -1,9 +1,11 @@
 package ca.team2994.robot2017;
 
-public interface Subsystem {
-	void initTeleop();
+public abstract class Subsystem {
+	abstract void initTeleop();
 
-	void tickTeleop();
+	abstract void tickTeleop();
 	
-	void tickTesting();
+	abstract void tickTesting();
+
+	abstract void initTesting();
 }
