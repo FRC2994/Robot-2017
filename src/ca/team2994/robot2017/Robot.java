@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 		Subsystems.driveJoystick.enableButton(9);
 		Subsystems.driveJoystick.enableButton(10);
 		Subsystems.driveJoystick.enableButton(11);
+		Subsystems.driveJoystick.enableButton(1);
 	}
 
 	/**
@@ -76,6 +77,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		Subsystems.robotDrive.setSafetyEnabled(false);
 		this.shooter.load();
 		this.shooter.setShooterSpeed(0);
 		Subsystems.driveJoystick.enableButton(4);

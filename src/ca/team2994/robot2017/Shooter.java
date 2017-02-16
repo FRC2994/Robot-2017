@@ -67,31 +67,40 @@ public class Shooter {
 		shooterPID.setDesiredValue(rpm);
 	}
 	
+	int tickCheck = 0;
+	
 	public void tick() {
-		System.out.println(calculateSpeed());
-		setShooterSpeed(1500);
-		
-		shooter.set(shooterPID.calcPID(calculateSpeed()));
+		int setpoint = (int)(driveJoystick.getY()*300);
+		setShooterSpeed(setpoint);
+		double value = shooterPID.calcPID(calculateSpeed());
+		tickCheck++;
+		if (tickCheck % 5 == 0) {
+//			System.out.println(tickCheck);
+			System.out.println("PID value: " + value + " <-> Speed: " + calculateSpeed() + " <-> Setpoint: " + setpoint);
+		}
+		if (value > 30) {
+			shooter.set(value);
+		}
 
 		if (driveJoystick.getRawButton(2)) {
 			if (driveJoystick.getEvent(6) == ButtonEntry.EVENT_CLOSED) {
 				eps += 5;
-				System.out.println("p value = " + p);
+				System.out.println("eps value = " + eps);
 			}
 			
 			if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_CLOSED) {
 				eps -= 5;
-				System.out.println("p value = " + p);
+				System.out.println("eps value = " + eps);
 			}
 			
 			if (driveJoystick.getEvent(11) == ButtonEntry.EVENT_CLOSED) {
 				eps += 1;
-				System.out.println("p value = " + p);
+				System.out.println("eps value = " + eps);
 			}
 			
 			if (driveJoystick.getEvent(10) == ButtonEntry.EVENT_CLOSED) {
 				eps -= 1;
-				System.out.println("p value = " + p);
+				System.out.println("eps value = " + eps);
 			}
 		}
 	
@@ -166,13 +175,17 @@ public class Shooter {
 			System.out.println("p = " + p + ", i = " + i + ", d = " + d + ", eps = " + eps);
 		}
 		
-		if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
+	/*	if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
 			p = 0.5;
 			i = 0.5;
 			d = 0.5;
 			eps = 5;
 			resetPID(p, i, d, eps);
 			System.out.println("p = " + p + ", i = " + i + ", d = " + d + ", eps = " + eps);
+		}*/
+		
+		if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED) {
+			System.out.println(calculateSpeed());
 		}
 	}
 }
