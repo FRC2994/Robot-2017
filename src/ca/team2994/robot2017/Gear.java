@@ -5,7 +5,6 @@ import static ca.team2994.frc.utils.Constants.SOLENOID_GEAR_CHANNEL1;
 import static ca.team2994.frc.utils.Constants.SOLENOID_GEAR_CHANNEL2;
 import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 import static ca.team2994.robot2017.Subsystems.driveJoystick;
-import static ca.team2994.robot2017.Subsystems.gearDown;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;

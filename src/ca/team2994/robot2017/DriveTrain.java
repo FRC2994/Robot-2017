@@ -63,6 +63,11 @@ public class DriveTrain extends Subsystem {
 	DoubleSolenoid gearShiftSolenoid = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL), 
 											getConstantAsInt(SOLENOID_SHIFTER_CHANNEL1),
 											getConstantAsInt(SOLENOID_SHIFTER_CHANNEL2));
+	public static DriveTrain instance;
+	
+	public static DriveTrain getInstance() {
+		return instance;
+	}
 	
 	public DriveTrain() {
 		// Set the rear drives to follow the left and right front drives
@@ -77,6 +82,30 @@ public class DriveTrain extends Subsystem {
 
 		// Set high gear by default
 		setHighGear();
+		
+		instance = this;
+	}
+	
+	public void reset() {
+		autoDrivePID.setDesiredValue(0);
+		// Reset the encoder PID to a reasonable state.
+		autoDrivePID.resetErrorSum();
+		autoDrivePID.resetPreviousVal();
+		// Used to make sure that the PID doesn't bail out as done
+		// right away (we know both the distances are zero from the
+		// above reset).
+		autoDrivePID.calcPID(0);
+
+		// Reset the gyro PID to a reasonable state.
+		gyroPID.resetErrorSum();
+		gyroPID.resetPreviousVal();
+		// Used to make sure that the PID doesn't bail out as done
+		// right away (we know the gyro angle is zero from the above
+		// reset).
+		gyroPID.calcPID(0);
+		
+		this.resetEncoders();
+		this.resetGyro();
 	}
 	
 	public void driveWithCurve(double speed, double turn) {

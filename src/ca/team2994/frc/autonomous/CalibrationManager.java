@@ -4,15 +4,17 @@ import java.io.File;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import ca.team2994.frc.utils.Constants;
+import ca.team2994.robot2017.DriveTrain;
 import ca.team2994.robot2017.Subsystems;
 
 public class CalibrationManager {
 	
 	private boolean calibrationDone = false;
+	
+	private static DriveTrain driveTrain = DriveTrain.getInstance();
 
 	public void calibrateInit() {
-    	Subsystems.leftDriveEncoder.reset();
-    	Subsystems.rightDriveEncoder.reset();
+		driveTrain.reset();
     	
     	Subsystems.driveJoystick.enableButton(Constants.getConstantAsInt(Constants.CALIBRATION_BUTTON));
 	}
@@ -21,13 +23,13 @@ public class CalibrationManager {
 		if(Subsystems.driveJoystick.getEvent(Constants.getConstantAsInt(Constants.JOYSTICK_CALIBRATE))
 				!= ButtonEntry.EVENT_CLOSED) {
     		Subsystems.driveJoystick.update();
-    		Subsystems.robotDrive.arcadeDrive(Subsystems.driveJoystick, false);
+    		driveTrain.arcadeDrive(Subsystems.driveJoystick);
     	}
 		else if(!calibrationDone) {
-			Subsystems.robotDrive.drive(0, 0);
+			driveTrain.setMotors(0, 0);
 	    	
-	    	int encoderAValue = Subsystems.leftDriveEncoder.get();
-	    	int encoderBValue = Subsystems.rightDriveEncoder.get();
+	    	int encoderAValue = driveTrain.getLeftEncoderValue();
+	    	int encoderBValue = driveTrain.getRightEncoderValue();
 	    	
 	    	double encoderAConstant = 0;
 	    	double encoderBConstant = 0;

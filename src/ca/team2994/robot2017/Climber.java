@@ -1,8 +1,9 @@
 package ca.team2994.robot2017;
 
-import static ca.team2994.robot2017.Subsystems.climber;
+import static ca.team2994.frc.utils.Constants.CLIMBER_SPEED;
+import static ca.team2994.frc.utils.Constants.PWM_CLIMBER;
+import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 import static ca.team2994.robot2017.Subsystems.driveJoystick;
-import static ca.team2994.frc.utils.Constants.*;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import edu.wpi.first.wpilibj.Victor;

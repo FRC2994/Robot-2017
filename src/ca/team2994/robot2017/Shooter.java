@@ -121,9 +121,15 @@ public class Shooter extends Subsystem {
 	
 	public void tickTesting() {
 		System.out.println(calculateSpeed());
-		setShooterSpeed(1500);
+		double speed = calculateSpeed();
+		double outputValue = shooterPID.calcPID(speed);
+		int target = (int)(300*driveJoystick.getY());
+
+		setShooterSpeed(target);
 		
-		shooter.set(shooterPID.calcPID(calculateSpeed()));
+		shooter.set(outputValue);
+		
+		System.out.println("Speed: " + speed + ", output: " + outputValue + ", target: " + target);
 
 		if (driveJoystick.getRawButton(2)) {
 			if (driveJoystick.getEvent(6) == ButtonEntry.EVENT_CLOSED) {
