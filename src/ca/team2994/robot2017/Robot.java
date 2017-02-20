@@ -1,9 +1,10 @@
 
 package ca.team2994.robot2017;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -14,6 +15,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 	private Shooter shooter;
+	private Gear gear;
+	private Pickup pickup;
+	private DriveTrain driveTrain;
+	private Climber climber;
+	
+	private List<Subsystem> subsystems;
+
+	private Robot instance;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -22,18 +31,25 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		Subsystems.initialize();
-		this.shooter = new Shooter();
 		
-		Subsystems.driveJoystick.enableButton(3);
-		Subsystems.driveJoystick.enableButton(4);
-		Subsystems.driveJoystick.enableButton(5);
-		Subsystems.driveJoystick.enableButton(6);
-		Subsystems.driveJoystick.enableButton(7);
-		Subsystems.driveJoystick.enableButton(8);
-		Subsystems.driveJoystick.enableButton(9);
-		Subsystems.driveJoystick.enableButton(10);
-		Subsystems.driveJoystick.enableButton(11);
-		Subsystems.driveJoystick.enableButton(1);
+		subsystems = new ArrayList<Subsystem>();
+
+		this.shooter = new Shooter();
+		subsystems.add(shooter); 
+
+		this.gear = new Gear();
+		subsystems.add(gear);
+		
+		this.climber = new Climber();
+		subsystems.add(climber);
+		
+		this.driveTrain = new DriveTrain();
+		subsystems.add(driveTrain);
+		
+		this.pickup = new Pickup();
+		
+		subsystems.add(pickup);
+		
 	}
 
 	/**
@@ -77,10 +93,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		Subsystems.robotDrive.setSafetyEnabled(false);
-		this.shooter.load();
-		this.shooter.setShooterSpeed(0);
 		Subsystems.driveJoystick.enableButton(4);
+		
+		for (Subsystem subsystem : subsystems) {
+			subsystem.initTeleop();
+		}
 	}
 
 	/**
@@ -89,8 +106,18 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Subsystems.driveJoystick.update();
-		Subsystems.shooter.set(-Subsystems.driveJoystick.getY());
-		this.shooter.tick();
+//		Subsystems.controlGamepad.update();
+
+		for (Subsystem subsystem : subsystems) {
+			subsystem.tickTeleop();
+		}
+	}
+
+	@Override
+	public void testInit() {
+		for (Subsystem subsystem : subsystems) {
+			subsystem.initTesting();
+		}
 	}
 
 	/**
@@ -98,6 +125,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		Subsystems.driveJoystick.update();
+//		Subsystems.controlGamepad.update();
+
+		for (Subsystem subsystem : subsystems) {
+			subsystem.tickTesting();
+		}
 	}
 }

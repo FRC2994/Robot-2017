@@ -21,6 +21,9 @@ public class Constants
 	
 	// PWM
 	public static final String PWM_INDEXER = "PWM_INDEXER";
+	public static final String PWM_PICKUP = "PWM_PICKUP";
+	public static final String PWM_CLIMBER = "PWM_CLIMBER";
+
 	
 	// DIO
 	public static final String DIO_RIGHT_ENCODER_A =			"DIO_RIGHT_ENCODER_A";
@@ -72,9 +75,13 @@ public class Constants
 	//Double Solenoid Channels
 	public static final String SOLENOID_SHIFTER_CHANNEL1 =		"SOLENOID_SHIFTER_CHANNEL1";
 	public static final String SOLENOID_SHIFTER_CHANNEL2 =		"SOLENOID_SHIFTER_CHANNEL2";
+	public static final String SOLENOID_GEAR_CHANNEL1 =		"SOLENOID_GEAR_CHANNEL1";
+	public static final String SOLENOID_GEAR_CHANNEL2 =		"SOLENOID_GEAR_CHANNEL2";
+	
 	
 	// Shooter
 	public static final String INDEXER_SPEED = "INDEXER_SPEED";
+	public static final String CLIMBER_SPEED = "CLIMBER_SPEED";
 
 	//Gamepad Buttons
 	
@@ -88,10 +95,12 @@ public class Constants
 		defaults.put(CAN_RIGHT_REAR_DRIVE, "2");
 		defaults.put(CAN_LEFT_FRONT_DRIVE, "3");
 		defaults.put(CAN_LEFT_REAR_DRIVE, "4");
-		defaults.put(CAN_SHOOTER, "1");
+		defaults.put(CAN_SHOOTER, "5");
 
 		// PWM
 		defaults.put(PWM_INDEXER, "0");
+		defaults.put(PWM_CLIMBER, "1");
+		defaults.put(PWM_PICKUP, "2");
 
 		// DIO
 		defaults.put(DIO_RIGHT_ENCODER_A, "0");
@@ -142,10 +151,13 @@ public class Constants
 		// Double Solenoid Channels
 		defaults.put(SOLENOID_SHIFTER_CHANNEL1, "0");
 		defaults.put(SOLENOID_SHIFTER_CHANNEL2, "1");
-		
+		defaults.put(SOLENOID_GEAR_CHANNEL1, "2");
+		defaults.put(SOLENOID_GEAR_CHANNEL2, "3");
+
 		// Shooter
 		defaults.put(INDEXER_SPEED, "0.5");
-		
+		defaults.put(CLIMBER_SPEED, "0.5");
+
 		// Joystick buttons
 		defaults.put(JOYSTICK_CALIBRATE, "1");
 

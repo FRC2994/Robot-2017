@@ -1,11 +1,12 @@
 package ca.team2994.frc.autonomous.commands;
 
 import ca.team2994.frc.autonomous.AutoCommand;
-import ca.team2994.frc.controls.GearToggler;
+import ca.team2994.robot2017.DriveTrain;
 
 public class GearShift implements AutoCommand {
 
 	private final boolean highGear;
+	private DriveTrain driveTrain = DriveTrain.getInstance();
 	
 	public GearShift(boolean highGear) {
 		this.highGear = highGear;
@@ -13,8 +14,12 @@ public class GearShift implements AutoCommand {
 	
 	@Override
 	public void initialize() {
-		GearToggler.setGear(highGear);
-		
+		if (highGear) {
+			driveTrain.setHighGear();
+		}
+		else {
+			driveTrain.setLowGear();
+		}
 	}
 
 	@Override
