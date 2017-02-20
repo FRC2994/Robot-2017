@@ -30,7 +30,7 @@ public class Subsystems {
 	{
 		// USB
 		driveJoystick = new EJoystick(getConstantAsInt(USB_DRIVE_STICK));
-		controlGamepad = new EGamepad(getConstantAsInt(USB_CONTROL_GAMEPAD));
+//		controlGamepad = new EGamepad(getConstantAsInt(USB_CONTROL_GAMEPAD));
 
 		// Power Panel
 		powerPanel = new PowerDistributionPanel();

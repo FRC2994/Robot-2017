@@ -12,35 +12,34 @@ public class Climber extends Subsystem {
 	Victor climber = new Victor(getConstantAsInt(PWM_CLIMBER));
 	
 	public Climber() {
-		driveJoystick.enableButton(x);
+		driveJoystick.enableButton(1);
+		
 	}
 	
 	@Override
 	public void initTeleop() {
 		// For sanity, reset the climber.
-		climber.set(0);
 	}
 
 	@Override
 	public void tickTeleop() {
-		if (driveJoystick.getEvent(x) == ButtonEntry.EVENT_CLOSED) {
-			climber.set(getConstantAsInt(CLIMBER_SPEED));
+		//horses rrruuullleee with nifflers
+		if(driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED){
+			climber.set(1.0);
 		}
-		else if (driveJoystick.getEvent(x) == ButtonEntry.EVENT_OPENED) {
-			climber.set(0.0);
+		if(driveJoystick.getEvent(1) == ButtonEntry.EVENT_OPENED){
+			climber.set(0);
 		}
 	}
 
 	@Override
 	public void tickTesting() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	void initTesting() {
-		// TODO Auto-generated method stub
-		
+		// NNNNNNNNNNIIIIIIIIIIFFFFFFFFFFFFFFFFFFFFLLLLLLLLLLEEEEEEEEEERRRRRRRRRRSSSSSSSSSS!!!!!!!!!!
 	}
 	
 }

@@ -1,6 +1,7 @@
 
 package ca.team2994.robot2017;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -30,6 +31,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		Subsystems.initialize();
+		
+		subsystems = new ArrayList<Subsystem>();
 
 		this.shooter = new Shooter();
 		subsystems.add(shooter); 
@@ -103,7 +106,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Subsystems.driveJoystick.update();
-		Subsystems.controlGamepad.update();
+//		Subsystems.controlGamepad.update();
 
 		for (Subsystem subsystem : subsystems) {
 			subsystem.tickTeleop();
@@ -123,7 +126,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		Subsystems.driveJoystick.update();
-		Subsystems.controlGamepad.update();
+//		Subsystems.controlGamepad.update();
 
 		for (Subsystem subsystem : subsystems) {
 			subsystem.tickTesting();

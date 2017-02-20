@@ -26,5 +26,7 @@
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
 
   <import file="${wpilib.ant.dir}/build.xml"/>
+	
+   <property name="userLibs" value="C:\\Users\\Jack McCracken\\workspace-sd\\Robot-2017\\lib"/>
 
 </project>

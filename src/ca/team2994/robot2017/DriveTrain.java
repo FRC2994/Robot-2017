@@ -22,10 +22,12 @@ import static ca.team2994.frc.utils.Constants.SOLENOID_SHIFTER_CHANNEL1;
 import static ca.team2994.frc.utils.Constants.SOLENOID_SHIFTER_CHANNEL2;
 import static ca.team2994.frc.utils.Constants.getConstantAsDouble;
 import static ca.team2994.frc.utils.Constants.getConstantAsInt;
+import static ca.team2994.robot2017.Subsystems.driveJoystick;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import ca.team2994.frc.controls.ButtonEntry;
 import ca.team2994.frc.controls.EJoystick;
 import ca.team2994.frc.controls.SimGyro;
 import ca.team2994.frc.utils.SimPID;
@@ -45,6 +47,7 @@ public class DriveTrain extends Subsystem {
 	Encoder leftDriveEncoder = new Encoder(getConstantAsInt(DIO_LEFT_ENCODER_A), getConstantAsInt(DIO_LEFT_ENCODER_B), true);
 	
 	AnalogGyro gyro = new SimGyro(getConstantAsInt(AIO_GYRO_SENSOR));
+	//Hailey Hailey Jack and Sam! They are the mentor fam!
 	
 	RobotDrive robotDrive;
 	
@@ -159,12 +162,12 @@ public class DriveTrain extends Subsystem {
 	
 	@Override
 	public void initTeleop() {
-
+		robotDrive.setSafetyEnabled(true);
 	}
 
 	@Override
 	public void tickTeleop() {
-		robotDrive.arcadeDrive(Subsystems.driveJoystick);
+		robotDrive.arcadeDrive(driveJoystick);
 	}
 
 	@Override

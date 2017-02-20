@@ -95,7 +95,7 @@ public class Constants
 		defaults.put(CAN_RIGHT_REAR_DRIVE, "2");
 		defaults.put(CAN_LEFT_FRONT_DRIVE, "3");
 		defaults.put(CAN_LEFT_REAR_DRIVE, "4");
-		defaults.put(CAN_SHOOTER, "1");
+		defaults.put(CAN_SHOOTER, "5");
 
 		// PWM
 		defaults.put(PWM_INDEXER, "0");
