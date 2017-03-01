@@ -23,6 +23,7 @@ public class Constants
 	public static final String PWM_INDEXER = "PWM_INDEXER";
 	public static final String PWM_PICKUP = "PWM_PICKUP";
 	public static final String PWM_CLIMBER = "PWM_CLIMBER";
+	public static final String PWM_AGITATOR = "PWM_AGITATOR";
 
 	
 	// DIO
@@ -69,7 +70,7 @@ public class Constants
 	public static final String CALIBRATION_BUTTON = 			"CALIBRATION_BUTTON";
 	
 	//Compressor channel
-	public static final String COMPRESSOR_CHANNEL =				"COMPRESSOR_CHANNEL";
+	public static final String PCM_CAN =				"PCM_CAN";
 	
 
 	//Double Solenoid Channels
@@ -99,8 +100,9 @@ public class Constants
 
 		// PWM
 		defaults.put(PWM_INDEXER, "0");
-		defaults.put(PWM_CLIMBER, "1");
+		defaults.put(PWM_CLIMBER, "3");
 		defaults.put(PWM_PICKUP, "2");
+		defaults.put(PWM_AGITATOR, "4");
 
 		// DIO
 		defaults.put(DIO_RIGHT_ENCODER_A, "0");
@@ -108,8 +110,6 @@ public class Constants
 		defaults.put(DIO_LEFT_ENCODER_A, "2");
 		defaults.put(DIO_LEFT_ENCODER_B, "3");
 
-		defaults.put(DIO_SHOOTER_ENCODER_A, "4");
-		defaults.put(DIO_SHOOTER_ENCODER_B, "5");
 		defaults.put(SHOOTER_ENCODER_CALIBRATION, "0.0078125");
 
 		// Analog IO
@@ -137,7 +137,7 @@ public class Constants
 		defaults.put(GYRO_PID_MAX, "0.4");
 
 		defaults.put(ENCODER_PID_P, "0.5"); //2.16 (Ryan and Jacks value)
-		defaults.put(ENCODER_PID_I, "0.0"); 
+		defaults.put(ENCODER_PID_I, "0.0");
 		defaults.put(ENCODER_PID_D, "0.0");
 		defaults.put(ENCODER_PID_E, "0.1");
 		defaults.put(ENCODER_PID_MAX, "0.2"); // 0.4 (Ryan and Jacks value) Too much jerk
@@ -146,7 +146,7 @@ public class Constants
 		defaults.put(CALIBRATION_BUTTON, "2");
 		
 		//Compressor Channel
-		defaults.put(COMPRESSOR_CHANNEL, "1");
+		defaults.put(PCM_CAN, "6");
 		
 		// Double Solenoid Channels
 		defaults.put(SOLENOID_SHIFTER_CHANNEL1, "0");

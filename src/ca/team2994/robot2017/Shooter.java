@@ -3,13 +3,12 @@ package ca.team2994.robot2017;
 import static ca.team2994.frc.utils.Constants.CAN_SHOOTER;
 import static ca.team2994.frc.utils.Constants.INDEXER_SPEED;
 import static ca.team2994.frc.utils.Constants.PWM_INDEXER;
+import static ca.team2994.frc.utils.Constants.PWM_AGITATOR;
 import static ca.team2994.frc.utils.Constants.getConstantAsDouble;
 import static ca.team2994.frc.utils.Constants.getConstantAsInt;
-import static ca.team2994.robot2017.Subsystems.driveJoystick;
+import static ca.team2994.robot2017.Subsystems.*;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import edu.wpi.first.wpilibj.Victor;
@@ -22,30 +21,37 @@ public class Shooter extends Subsystem {
 
 	CANTalon shooter = new CANTalon(getConstantAsInt(CAN_SHOOTER));
 	Victor indexer = new Victor(getConstantAsInt(PWM_INDEXER));
+	Victor agitator = new Victor(getConstantAsInt(PWM_AGITATOR));
+	
+	public static int SHOOT_START_BUTTON = 2;
 
 	public Shooter() {
-		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooter.reverseSensor(false);
-		shooter.reverseOutput(true);
-		shooter.configNominalOutputVoltage(+0.0f, -0.0f);
-		shooter.configPeakOutputVoltage(+12.0f, -12.0f);
-		shooter.setProfile(0);
-		shooter.changeControlMode(TalonControlMode.Speed);
-		shooter.configEncoderCodesPerRev(128);
-		shooter.setF(0.96);
-//		shooter.setP(0);
-//		shooter.setI(0);
-//		shooter.setD(0);
-		shooter.setP(0.6);
-		shooter.setI(0.0);
-		shooter.setD(0.0);
+		indexer.setInverted(true);
+		agitator.setInverted(true);
+
+//		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//		shooter.reverseSensor(false);
+//		shooter.reverseOutput(true);
+//		shooter.configNominalOutputVoltage(+0.0f, -0.0f);
+//		shooter.configPeakOutputVoltage(+12.0f, -12.0f);
+//		shooter.setProfile(0);
+//		shooter.changeControlMode(TalonControlMode.Speed);
+//		shooter.configEncoderCodesPerRev(128);
+//		shooter.setF(0.96);
+//		shooter.setP(0.6);
+//		shooter.setI(0.0);
+//		shooter.setD(0.0);
 
 		shooter.set(0);
+		
+		driveJoystick.enableButton(1);
+		driveJoystick.enableButton(SHOOT_START_BUTTON);
+		driveJoystick.enableButton(8);
+		controlGamepad.enableButton(9);
 	}
 
 	@Override
 	public void initTeleop() {
-		load();
 	}
 
 	public void load() {
@@ -55,10 +61,38 @@ public class Shooter extends Subsystem {
 	public void stopLoading() {
 		indexer.set(0);
 	}
+	double speedTarget = 0.0;
+	boolean shootToggle = false;
 
 	@Override
 	public void tickTeleop() {
-		shooter.set(-driveJoystick.getY());
+		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
+			speedTarget += 0.1;
+			System.out.println(speedTarget);
+		}
+		if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
+			speedTarget -= 0.1;
+			System.out.println(speedTarget);
+		}
+		if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED) {
+			load();
+			agitator.set(1.0);
+		}
+		else if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_OPENED) {
+			stopLoading();
+			agitator.set(0);
+		}
+
+		if (controlGamepad.getEvent(SHOOT_START_BUTTON) == ButtonEntry.EVENT_CLOSED) {
+			if (shootToggle) {
+				shooter.set(1.0);
+			}
+			else {
+				shooter.set(0);
+			}
+
+			shootToggle = !shootToggle;
+		}
 	}
 	
 	@Override

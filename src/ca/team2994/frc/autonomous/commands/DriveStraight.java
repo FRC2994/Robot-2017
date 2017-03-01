@@ -33,6 +33,7 @@ public class DriveStraight implements AutoCommand {
 			// TODO: Read this from the constants file as "encoderPIDMax"
 			double limitVal = SimLib.limitValue(driveVal, Constants.getConstantAsDouble(Constants.ENCODER_PID_MAX));
 
+			System.out.println("Limitval: " + limitVal);
 			driveTrain.setMotors(limitVal, limitVal);
 
 			return true;

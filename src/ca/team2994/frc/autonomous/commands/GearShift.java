@@ -31,6 +31,7 @@ public class GearShift implements AutoCommand {
 	@Override
 	public void cleanup() {
 		// No cleanup necessary
+		System.out.println("End of cleanup");
 	}
 
 }

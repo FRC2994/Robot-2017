@@ -12,6 +12,8 @@ public class Pickup extends Subsystem {
 	
 	public Pickup() {
 		driveJoystick.enableButton(2);
+		
+		pickup.setInverted(true);
 	}
 	
 	
@@ -30,6 +32,14 @@ public class Pickup extends Subsystem {
 		if(driveJoystick.getEvent(2) == ButtonEntry.EVENT_OPENED){
 			pickup.set(0);
 		}
+	}
+	
+	public void pickup() {
+		pickup.set(0.3);
+	}
+	
+	public void stopPickup() {
+		pickup.set(0.0);
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import static ca.team2994.frc.utils.Constants.CAN_LEFT_FRONT_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_LEFT_REAR_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_RIGHT_FRONT_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_RIGHT_REAR_DRIVE;
-import static ca.team2994.frc.utils.Constants.COMPRESSOR_CHANNEL;
+import static ca.team2994.frc.utils.Constants.PCM_CAN;
 import static ca.team2994.frc.utils.Constants.DIO_LEFT_ENCODER_A;
 import static ca.team2994.frc.utils.Constants.DIO_LEFT_ENCODER_B;
 import static ca.team2994.frc.utils.Constants.DIO_RIGHT_ENCODER_A;
@@ -45,9 +45,8 @@ public class DriveTrain extends Subsystem {
 	
 	Encoder rightDriveEncoder = new Encoder(getConstantAsInt(DIO_RIGHT_ENCODER_A), getConstantAsInt(DIO_RIGHT_ENCODER_B), true);
 	Encoder leftDriveEncoder = new Encoder(getConstantAsInt(DIO_LEFT_ENCODER_A), getConstantAsInt(DIO_LEFT_ENCODER_B), true);
-	
+
 	AnalogGyro gyro = new SimGyro(getConstantAsInt(AIO_GYRO_SENSOR));
-	//Hailey Hailey Jack and Sam! They are the mentor fam!
 	
 	RobotDrive robotDrive;
 	
@@ -63,7 +62,7 @@ public class DriveTrain extends Subsystem {
 						getConstantAsDouble(ENCODER_PID_D),
 						getConstantAsDouble(ENCODER_PID_E));
 	
-	DoubleSolenoid gearShiftSolenoid = new DoubleSolenoid(getConstantAsInt(COMPRESSOR_CHANNEL), 
+	DoubleSolenoid gearShiftSolenoid = new DoubleSolenoid(getConstantAsInt(PCM_CAN), 
 											getConstantAsInt(SOLENOID_SHIFTER_CHANNEL1),
 											getConstantAsInt(SOLENOID_SHIFTER_CHANNEL2));
 	public static DriveTrain instance;
@@ -81,10 +80,14 @@ public class DriveTrain extends Subsystem {
 
 		robotDrive = new RobotDrive(leftFrontDrive, rightFrontDrive);
 
-		gyro.initGyro();
+		rightDriveEncoder.setDistancePerPulse(0.00981770833);
+		leftDriveEncoder.setDistancePerPulse(0.00981770833);
 
-		// Set high gear by default
-		setHighGear();
+		gyro.initGyro();
+		
+		// Set low gear by default
+		setLowGear();
+		
 		
 		instance = this;
 	}
@@ -157,16 +160,27 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double getDistance() {
-		return (leftDriveEncoder.getDistance() + rightDriveEncoder.getDistance()) / 2.0;
+		return rightDriveEncoder.getDistance();
 	}
 	
 	@Override
 	public void initTeleop() {
-		robotDrive.setSafetyEnabled(true);
+		// Set low gear by default
+		setLowGear();
+
+		robotDrive.setSafetyEnabled(false);
+		driveJoystick.enableButton(7);
 	}
 
 	@Override
 	public void tickTeleop() {
+		if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_CLOSED) {
+			setHighGear();
+		}
+		else if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_OPENED) {
+			setLowGear();
+		}
+		
 		robotDrive.arcadeDrive(driveJoystick);
 	}
 
@@ -181,6 +195,6 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void setMotors(double leftMotors, double rightMotors) {
-		
+		robotDrive.setLeftRightMotorOutputs(leftMotors, rightMotors);
 	}
 }

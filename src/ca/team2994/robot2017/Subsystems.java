@@ -6,6 +6,7 @@ import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 
 import ca.team2994.frc.controls.EGamepad;
 import ca.team2994.frc.controls.EJoystick;
+import ca.team2994.frc.utils.Constants;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -36,6 +37,7 @@ public class Subsystems {
 		powerPanel = new PowerDistributionPanel();
 
 		//Compressor
-		compressor = new Compressor();
+		compressor = new Compressor(Constants.getConstantAsInt(Constants.PCM_CAN));
+		compressor.start();
 	}
 }

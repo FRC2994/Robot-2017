@@ -12,8 +12,8 @@ public class Climber extends Subsystem {
 	Victor climber = new Victor(getConstantAsInt(PWM_CLIMBER));
 	
 	public Climber() {
-		driveJoystick.enableButton(1);
-		
+		driveJoystick.enableButton(11);
+		climber.setInverted(true);
 	}
 	
 	@Override
@@ -24,12 +24,22 @@ public class Climber extends Subsystem {
 	@Override
 	public void tickTeleop() {
 		//horses rrruuullleee with nifflers
-		if(driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED){
-			climber.set(1.0);
+		if(driveJoystick.getEvent(11) == ButtonEntry.EVENT_CLOSED){
+			climb();
 		}
-		if(driveJoystick.getEvent(1) == ButtonEntry.EVENT_OPENED){
-			climber.set(0);
+		if(driveJoystick.getEvent(11) == ButtonEntry.EVENT_OPENED){
+			stopClimbing();
 		}
+	}
+	
+	public void climb() {
+		Subsystems.compressor.stop();
+		climber.set(1);
+	}
+	
+	public void stopClimbing() {
+		Subsystems.compressor.start();
+		climber.set(0);
 	}
 
 	@Override

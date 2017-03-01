@@ -4,6 +4,8 @@ package ca.team2994.robot2017;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.team2994.frc.autonomous.AutoMode;
+import ca.team2994.frc.autonomous.modes.BasicRobotSetMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -33,19 +35,19 @@ public class Robot extends IterativeRobot {
 		Subsystems.initialize();
 		
 		subsystems = new ArrayList<Subsystem>();
-
+//
 		this.shooter = new Shooter();
 		subsystems.add(shooter); 
 
 		this.gear = new Gear();
 		subsystems.add(gear);
-		
+
 		this.climber = new Climber();
 		subsystems.add(climber);
-		
+//		
 		this.driveTrain = new DriveTrain();
 		subsystems.add(driveTrain);
-		
+//		
 		this.pickup = new Pickup();
 		
 		subsystems.add(pickup);
@@ -59,7 +61,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		shooter.stopLoading();
+//		shooter.stopLoading();
 	}
 
 	@Override
@@ -67,6 +69,8 @@ public class Robot extends IterativeRobot {
 
 	}
 
+	AutoMode mode = new BasicRobotSetMode();
+	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -80,7 +84,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+//		Subsystems.compressor.start();
+////		System.out.println("Periodic");
+//		gear.setGearDirection(Position.DOWN);
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+////		System.out.println("Done");
+//		gear.setGearDirection(Position.UP);
 		
+		mode.initialize();
 	}
 
 	/**
@@ -88,16 +104,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		
+		mode.tick();
 	}
 
 	@Override
 	public void teleopInit() {
-		Subsystems.driveJoystick.enableButton(4);
-		
 		for (Subsystem subsystem : subsystems) {
 			subsystem.initTeleop();
 		}
+		
+		Subsystems.driveJoystick.enableButton(3);
 	}
 
 	/**
@@ -106,7 +122,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Subsystems.driveJoystick.update();
-//		Subsystems.controlGamepad.update();
+		Subsystems.controlGamepad.update();
 
 		for (Subsystem subsystem : subsystems) {
 			subsystem.tickTeleop();
@@ -125,8 +141,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		Subsystems.compressor.start();
 		Subsystems.driveJoystick.update();
-//		Subsystems.controlGamepad.update();
+		Subsystems.controlGamepad.update();
 
 		for (Subsystem subsystem : subsystems) {
 			subsystem.tickTesting();
