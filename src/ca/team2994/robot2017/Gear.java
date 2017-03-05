@@ -12,16 +12,22 @@ public class Gear extends Subsystem {
 											getConstantAsInt(PCM_CAN),
 											getConstantAsInt(SOLENOID_GEAR_CHANNEL1),
 											getConstantAsInt(SOLENOID_GEAR_CHANNEL2));
+	public static Gear instance;
 	
 	public enum Position {
 		DOWN,
 		UP
 	}
 	
+	public static Gear getInstance() {
+		return instance;
+	}
+	
 	public Gear() {
 		resetSolenoid();
 		
 		driveJoystick.enableButton(6);
+		instance = this;
 	}
 	
 	public void resetSolenoid() {
@@ -32,10 +38,10 @@ public class Gear extends Subsystem {
 		// Forward = down
 		// Reverse = up
 		if (pos == Position.DOWN) {
-			solenoid.set(Value.kForward);
+			solenoid.set(Value.kReverse);
 		}
 		else if (pos == Position.UP) {
-			solenoid.set(Value.kReverse);
+			solenoid.set(Value.kForward);
 		}
 	}
 

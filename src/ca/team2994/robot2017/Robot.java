@@ -7,6 +7,7 @@ import java.util.List;
 import ca.team2994.frc.autonomous.AutoMode;
 import ca.team2994.frc.autonomous.modes.BasicRobotSetMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +25,15 @@ public class Robot extends IterativeRobot {
 	
 	private List<Subsystem> subsystems;
 
-	private Robot instance;
+	private static Robot instance;
+	
+	public Robot() {
+		instance = this;
+	}
+	
+	public static Robot getInstance() {
+		return instance;
+	}
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -69,7 +78,7 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	AutoMode mode = new BasicRobotSetMode();
+	AutoMode mode;
 	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -84,18 +93,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-//		Subsystems.compressor.start();
-////		System.out.println("Periodic");
-//		gear.setGearDirection(Position.DOWN);
-//		try {
-//			Thread.sleep(2000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-////		System.out.println("Done");
-//		gear.setGearDirection(Position.UP);
-		
+		mode = new BasicRobotSetMode();
+		driveTrain.robotDrive.setSafetyEnabled(false);
+		driveTrain.setLowGear();
 		mode.initialize();
 	}
 

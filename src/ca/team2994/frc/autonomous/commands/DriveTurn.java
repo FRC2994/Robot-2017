@@ -18,6 +18,7 @@ public class DriveTurn implements AutoCommand {
 	
 	@Override
 	public void initialize() {
+		driveTrain.reset();
 		gyroPID = driveTrain.getTurnPID();
 		gyroPID.setDesiredValue(angle);
 		System.out.println("DriveTurn Init:" + angle);

@@ -23,11 +23,11 @@ public class Shooter extends Subsystem {
 	Victor indexer = new Victor(getConstantAsInt(PWM_INDEXER));
 	Victor agitator = new Victor(getConstantAsInt(PWM_AGITATOR));
 	
-	public static int SHOOT_START_BUTTON = 2;
+	public static int SHOOT_START_BUTTON = 1;
 
 	public Shooter() {
 		indexer.setInverted(true);
-		agitator.setInverted(true);
+//		agitator.setInverted(true);
 
 //		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 //		shooter.reverseSensor(false);
@@ -45,9 +45,9 @@ public class Shooter extends Subsystem {
 		shooter.set(0);
 		
 		driveJoystick.enableButton(1);
-		driveJoystick.enableButton(SHOOT_START_BUTTON);
+		controlGamepad.enableButton(SHOOT_START_BUTTON);
 		driveJoystick.enableButton(8);
-		controlGamepad.enableButton(9);
+		driveJoystick.enableButton(9);
 	}
 
 	@Override
@@ -66,14 +66,6 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void tickTeleop() {
-		if (driveJoystick.getEvent(8) == ButtonEntry.EVENT_CLOSED) {
-			speedTarget += 0.1;
-			System.out.println(speedTarget);
-		}
-		if (driveJoystick.getEvent(9) == ButtonEntry.EVENT_CLOSED) {
-			speedTarget -= 0.1;
-			System.out.println(speedTarget);
-		}
 		if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED) {
 			load();
 			agitator.set(1.0);
@@ -85,7 +77,7 @@ public class Shooter extends Subsystem {
 
 		if (controlGamepad.getEvent(SHOOT_START_BUTTON) == ButtonEntry.EVENT_CLOSED) {
 			if (shootToggle) {
-				shooter.set(1.0);
+				shooter.set(0.75);
 			}
 			else {
 				shooter.set(0);

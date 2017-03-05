@@ -82,6 +82,7 @@ public class DriveTrain extends Subsystem {
 
 		rightDriveEncoder.setDistancePerPulse(0.00981770833);
 		leftDriveEncoder.setDistancePerPulse(0.00981770833);
+		rightDriveEncoder.setReverseDirection(true);
 
 		gyro.initGyro();
 		
@@ -127,6 +128,15 @@ public class DriveTrain extends Subsystem {
 		rightDriveEncoder.reset();
 	}
 	
+	public enum BrakeCoastStatus {
+		BRAKE,
+		COAST
+	}
+	
+	public void setBrakeCoast(BrakeCoastStatus brakeOrCoast) {
+		leftRearDrive.enableBrakeMode(brakeOrCoast == BrakeCoastStatus.BRAKE ? true : false);
+	}
+	
 	public void setLowGear() {
 		gearShiftSolenoid.set(Value.kReverse);
 	}
@@ -165,8 +175,10 @@ public class DriveTrain extends Subsystem {
 	
 	@Override
 	public void initTeleop() {
-		// Set low gear by default
+		// Set low gear & brake mode by default
+		setBrakeCoast(BrakeCoastStatus.BRAKE);
 		setLowGear();
+		reset();
 
 		robotDrive.setSafetyEnabled(false);
 		driveJoystick.enableButton(7);
@@ -180,7 +192,8 @@ public class DriveTrain extends Subsystem {
 		else if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_OPENED) {
 			setLowGear();
 		}
-		
+		System.out.println("Encoder: " + getRightEncoderValue() + ", " + getLeftEncoderValue());
+
 		robotDrive.arcadeDrive(driveJoystick);
 	}
 

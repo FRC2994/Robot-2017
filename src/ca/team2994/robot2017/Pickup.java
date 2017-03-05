@@ -13,7 +13,7 @@ public class Pickup extends Subsystem {
 	public Pickup() {
 		driveJoystick.enableButton(2);
 		
-		pickup.setInverted(true);
+		pickup.setInverted(false);
 	}
 	
 	

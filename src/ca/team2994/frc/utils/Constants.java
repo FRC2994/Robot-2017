@@ -38,6 +38,7 @@ public class Constants
 	
 	// Analog IO
 	public static final String AIO_GYRO_SENSOR =				"AIO_GYRO_SENSOR";
+	public static final String AIO_AUTO_SELECT =				"AIO_AUTO_SELECT";
 
 	// USB
 	public static final String USB_DRIVE_STICK =				"USB_RIGHT_STICK";
@@ -114,6 +115,7 @@ public class Constants
 
 		// Analog IO
 		defaults.put(AIO_GYRO_SENSOR, "0");
+		defaults.put(AIO_AUTO_SELECT, "1");
 
 		// USB
 		defaults.put(USB_DRIVE_STICK, "0");
@@ -122,7 +124,7 @@ public class Constants
 		// Solenoid
 		defaults.put(PCM_SHIFTER_A, "0");
 		defaults.put(PCM_SHIFTER_B, "1");
-		
+
 		//PID
 		defaults.put(SHOOTER_PID_P, "0");
 		defaults.put(SHOOTER_PID_I, "0");
@@ -132,15 +134,15 @@ public class Constants
 
 		defaults.put(GYRO_PID_P, "0.05");
 		defaults.put(GYRO_PID_I, "0.01");
-		defaults.put(GYRO_PID_D, "0.01");
-		defaults.put(GYRO_PID_E, "5.0");
-		defaults.put(GYRO_PID_MAX, "0.4");
+		defaults.put(GYRO_PID_D, "0.05");
+		defaults.put(GYRO_PID_E, "1.0");
+		defaults.put(GYRO_PID_MAX, "1");
 
 		defaults.put(ENCODER_PID_P, "0.5"); //2.16 (Ryan and Jacks value)
 		defaults.put(ENCODER_PID_I, "0.0");
 		defaults.put(ENCODER_PID_D, "0.0");
-		defaults.put(ENCODER_PID_E, "0.1");
-		defaults.put(ENCODER_PID_MAX, "0.2"); // 0.4 (Ryan and Jacks value) Too much jerk
+		defaults.put(ENCODER_PID_E, "0.2");
+		defaults.put(ENCODER_PID_MAX, "0.5"); // 0.4 (Ryan and Jacks value) Too much jerk
 
 		defaults.put(CALIBRATION_FILE_LOC, "/home/lvuser/calibration.txt");
 		defaults.put(CALIBRATION_BUTTON, "2");

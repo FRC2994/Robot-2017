@@ -22,8 +22,6 @@ public class Subsystems {
 
 	public static Compressor compressor;
 
- 	public static DigitalInput[] inputs;
-
 	/**
 	 * Initialize all of the subsystems, assumes that the constants file has been read already
 	 */
@@ -31,7 +29,7 @@ public class Subsystems {
 	{
 		// USB
 		driveJoystick = new EJoystick(getConstantAsInt(USB_DRIVE_STICK));
-//		controlGamepad = new EGamepad(getConstantAsInt(USB_CONTROL_GAMEPAD));
+		controlGamepad = new EGamepad(getConstantAsInt(USB_CONTROL_GAMEPAD));
 
 		// Power Panel
 		powerPanel = new PowerDistributionPanel();

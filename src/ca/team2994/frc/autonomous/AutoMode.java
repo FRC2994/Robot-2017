@@ -1,5 +1,7 @@
 package ca.team2994.frc.autonomous;
 
+import ca.team2994.robot2017.Robot;
+
 public abstract class AutoMode {
 	
 	private AutoCommand[] commands;
@@ -7,6 +9,10 @@ public abstract class AutoMode {
 	
 	public void tick() {
 		if (commandIdx < commands.length) {  //Still commands
+			if (!Robot.getInstance().isAutonomous()) {
+				commands[commandIdx].cleanup();
+				commandIdx = commands.length;
+			}
 			if (!commands[commandIdx].tick()) { //This command is done
 				commands[commandIdx].cleanup(); // cleanup command
 				commandIdx++; //increment index
@@ -16,9 +22,9 @@ public abstract class AutoMode {
 			}
 		}
 	}
-	
+
 	protected abstract AutoCommand[] initializeCommands();
-	
+
 	public void initialize() {
 		commands = initializeCommands();
 		if (commands != null && commands.length > 0) {
