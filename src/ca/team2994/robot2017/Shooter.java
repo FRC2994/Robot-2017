@@ -9,19 +9,29 @@ import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 import static ca.team2994.robot2017.Subsystems.*;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import edu.wpi.first.wpilibj.Victor;
 
 public class Shooter extends Subsystem {
+	public enum Mode {
+		PercentageVoltage,
+		Speed
+	}
+	
 	double previousRotations;
 	long previousTime;
 	double p, i, d, eps;
 	int target = 0;
+	
+	private Mode mode = Mode.PercentageVoltage;
 
 	CANTalon shooter = new CANTalon(getConstantAsInt(CAN_SHOOTER));
 	Victor indexer = new Victor(getConstantAsInt(PWM_INDEXER));
 	Victor agitator = new Victor(getConstantAsInt(PWM_AGITATOR));
+	private static Shooter instance;
 	
 	public static int SHOOT_START_BUTTON = 1;
 
@@ -29,25 +39,37 @@ public class Shooter extends Subsystem {
 		indexer.setInverted(true);
 //		agitator.setInverted(true);
 
-//		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		shooter.reverseSensor(false);
-//		shooter.reverseOutput(true);
-//		shooter.configNominalOutputVoltage(+0.0f, -0.0f);
-//		shooter.configPeakOutputVoltage(+12.0f, -12.0f);
-//		shooter.setProfile(0);
-//		shooter.changeControlMode(TalonControlMode.Speed);
-//		shooter.configEncoderCodesPerRev(128);
-//		shooter.setF(0.96);
-//		shooter.setP(0.6);
-//		shooter.setI(0.0);
-//		shooter.setD(0.0);
-
 		shooter.set(0);
 		
 		driveJoystick.enableButton(1);
 		controlGamepad.enableButton(SHOOT_START_BUTTON);
 		driveJoystick.enableButton(8);
 		driveJoystick.enableButton(9);
+		
+		instance = this;
+	}
+	
+	public void setMode(Mode mode) {
+		this.mode = mode;
+		switch (mode) {
+		case PercentageVoltage: {
+			
+		}
+		case Speed: {
+			shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			shooter.reverseSensor(false);
+			shooter.reverseOutput(true);
+			shooter.configNominalOutputVoltage(+0.0f, -0.0f);
+			shooter.configPeakOutputVoltage(+12.0f, -12.0f);
+			shooter.setProfile(0);
+			shooter.changeControlMode(TalonControlMode.Speed);
+			shooter.configEncoderCodesPerRev(128);
+			shooter.setF(0.96);
+			shooter.setP(0.6);
+			shooter.setI(0.0);
+			shooter.setD(0.0);
+		}
+		}
 	}
 
 	@Override
@@ -85,6 +107,19 @@ public class Shooter extends Subsystem {
 
 			shootToggle = !shootToggle;
 		}
+	}
+	
+	public void shootAtPercentageVoltage(double percentVoltage) {
+		shooter.changeControlMode(TalonControlMode.PercentVbus);
+		shooter.set(percentVoltage);
+	}
+	
+	public void stopShooting() {
+		shooter.set(0);
+	}
+	
+	public void shootAtDesiredSpeed(int rpm) {
+		
 	}
 	
 	@Override
@@ -174,5 +209,9 @@ public class Shooter extends Subsystem {
 		}
 
 		shooter.set(target);
+	}
+
+	public static Shooter getInstance() {
+		return instance;
 	}
 }
