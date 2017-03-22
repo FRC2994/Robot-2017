@@ -80,9 +80,10 @@ public class DriveTrain extends Subsystem {
 
 		robotDrive = new RobotDrive(leftFrontDrive, rightFrontDrive);
 
-		rightDriveEncoder.setDistancePerPulse(0.00981770833);
-		leftDriveEncoder.setDistancePerPulse(0.00981770833);
+		rightDriveEncoder.setDistancePerPulse(0.026);
+		leftDriveEncoder.setDistancePerPulse(0.001);
 		rightDriveEncoder.setReverseDirection(true);
+		leftDriveEncoder.setReverseDirection(true);
 
 		gyro.initGyro();
 		
@@ -156,7 +157,7 @@ public class DriveTrain extends Subsystem {
 	public SimPID getAutoDrivePID() {
 		return autoDrivePID;
 	}
-	
+
 	public SimPID getTurnPID() {
 		return gyroPID;
 	}
@@ -192,7 +193,11 @@ public class DriveTrain extends Subsystem {
 		else if (driveJoystick.getEvent(7) == ButtonEntry.EVENT_OPENED) {
 			setLowGear();
 		}
-		System.out.println("Encoder: " + getRightEncoderValue() + ", " + getLeftEncoderValue());
+		
+		
+
+		System.out.println("Encoder: " + getLeftEncoderValue() + ", " + getRightEncoderValue() + ", dist = " + getDistance());
+		System.out.println("Gyro: " + gyro.getAngle());
 
 		robotDrive.arcadeDrive(driveJoystick);
 	}

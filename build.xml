@@ -27,7 +27,6 @@
 
   <import file="${wpilib.ant.dir}/build.xml"/>
 	
-   <property name="userLibs" value="C:\\Users\\Jack McCracken\\workspace-sd\\Robot-2017\\lib"/>
+   <property name="userLibs" value="/Users/jackmccracken/sources/robot-2017/lib"/>
 
-  <property name="userLibs" value="C:\\Users\\ASH\\Documents\\GitHub\\Robot-2017\\lib"/>
 </project>

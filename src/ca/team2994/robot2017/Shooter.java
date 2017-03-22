@@ -33,7 +33,7 @@ public class Shooter extends Subsystem {
 	Victor agitator = new Victor(getConstantAsInt(PWM_AGITATOR));
 	private static Shooter instance;
 	
-	public static int SHOOT_START_BUTTON = 1;
+	public static int SHOOT_START_BUTTON = 2;
 
 	public Shooter() {
 		indexer.setInverted(true);
@@ -77,11 +77,14 @@ public class Shooter extends Subsystem {
 	}
 
 	public void load() {
+		System.out.println("loading");
 		indexer.set(getConstantAsDouble(INDEXER_SPEED));
+		agitator.set(1.0);
 	}
 	
 	public void stopLoading() {
 		indexer.set(0);
+		agitator.set(0);
 	}
 	double speedTarget = 0.0;
 	boolean shootToggle = false;
@@ -90,11 +93,9 @@ public class Shooter extends Subsystem {
 	public void tickTeleop() {
 		if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_CLOSED) {
 			load();
-			agitator.set(1.0);
 		}
 		else if (driveJoystick.getEvent(1) == ButtonEntry.EVENT_OPENED) {
 			stopLoading();
-			agitator.set(0);
 		}
 
 		if (controlGamepad.getEvent(SHOOT_START_BUTTON) == ButtonEntry.EVENT_CLOSED) {
