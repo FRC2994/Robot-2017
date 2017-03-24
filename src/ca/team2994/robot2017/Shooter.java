@@ -74,6 +74,9 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void initTeleop() {
+		shooter.set(0);
+		agitator.set(0);
+		indexer.set(0);
 	}
 
 	public void load() {

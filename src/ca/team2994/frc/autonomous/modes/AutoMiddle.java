@@ -9,24 +9,17 @@ import ca.team2994.frc.autonomous.commands.GearShift;
 import ca.team2994.frc.autonomous.commands.GeneralAutoConstants;
 import ca.team2994.frc.autonomous.commands.Wait;
 
-public class DeliverMiddleGearGoToLine extends AutoMode implements GeneralAutoConstants {
-	private static int INCHES_FROM_STARTB_TO_PEG = 17;
-	private static int BACKWARDS_INCHES_FROM_PEG = 8;
-	private static int ANGLE_TO_BASELINE = 50;
-	private static int DISTANCE_TO_BASELINE_FROM_ANGLED_TURN = 8;
-	
+public class AutoMiddle extends AutoMode implements AutoConstants {
 	@Override
 	protected AutoCommand[] initializeCommands() {
 		// This assumes that we start in the staging zone parallel to the closest scoring platform
 		AutoBuilder builder = new AutoBuilder();
 
 		// Shift to low gear
-		builder.add(new GearShift(false));
-		builder.add(new DriveStraight(-INCHES_FROM_STARTB_TO_PEG));
-		builder.add(new Wait(SECONDS_TO_WAIT_FOR_PILOT));
-		builder.add(new DriveStraight(BACKWARDS_INCHES_FROM_PEG));
-		builder.add(new DriveTurn(ANGLE_TO_BASELINE));
-		builder.add(new DriveStraight(DISTANCE_TO_BASELINE_FROM_ANGLED_TURN));
+		builder.add(new DriveStraight(-73, 0.3));
+		builder.add(new Wait(LONG_GEAR_WAIT));
+		builder.add(new DriveStraight(GEAR_BACKUP, 0.3));
+		builder.add(new DriveTurn(90)); // Align to go pick up next gear
 
 		return builder.toArray();
 	}

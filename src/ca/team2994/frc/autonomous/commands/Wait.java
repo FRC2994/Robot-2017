@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.Timer;
 
 // A simple command to wait for a couple seconds.
 public class Wait implements AutoCommand {
-	private int seconds;
+	private double seconds;
 	
-	public Wait(int seconds) {
+	public Wait(double seconds) {
 		this.seconds = seconds;
 	}
 	

@@ -3,7 +3,7 @@ package ca.team2994.frc.autonomous;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.team2994.frc.autonomous.modes.BasicRobotSetMode;
+import ca.team2994.frc.autonomous.modes.DoNothingMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import static ca.team2994.frc.utils.Constants.*;
@@ -18,7 +18,7 @@ public class AutoModeSelector {
 	static {
 		//TODO: Add all autonomous modes here.
 
-		modes.add(BasicRobotSetMode.class);
+		modes.add(DoNothingMode.class);
 	}
 	
 	public AutoMode selectMode() {
@@ -33,7 +33,7 @@ public class AutoModeSelector {
 			return modes.get(modeNo).newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			System.out.println("Cannot create class.");
-			return new BasicRobotSetMode();
+			return new DoNothingMode();
 		}
 	}
 }

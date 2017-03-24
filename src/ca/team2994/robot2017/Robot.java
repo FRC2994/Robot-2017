@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.team2994.frc.autonomous.AutoMode;
-import ca.team2994.frc.autonomous.modes.BasicRobotSetMode;
+import ca.team2994.frc.autonomous.modes.AutoRightNoShot;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -93,7 +92,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		mode = new BasicRobotSetMode();
+		mode = new AutoRightNoShot();
 		driveTrain.robotDrive.setSafetyEnabled(false);
 		driveTrain.setLowGear();
 		mode.initialize();
