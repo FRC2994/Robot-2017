@@ -13,12 +13,6 @@ public class EJoystick extends Joystick
 		initialize();
 	}
 
-	public EJoystick(int port, int numAxisTypes, int numButtonTypes) 
-	{
-		super(port, numAxisTypes, numButtonTypes);
-		initialize();
-	}
-
 	public int getEvent(int buttonNumber) 
 	{
 		if (buttonNumber < 1 || buttonNumber > EJOYSTICK_NUM_BUTTONS) 

@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 		Subsystems.initialize();
 		
 		subsystems = new ArrayList<Subsystem>();
-//
+
 		this.shooter = new Shooter();
 		subsystems.add(shooter); 
 

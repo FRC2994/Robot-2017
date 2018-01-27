@@ -5,7 +5,6 @@ import static ca.team2994.frc.utils.Constants.CAN_LEFT_FRONT_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_LEFT_REAR_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_RIGHT_FRONT_DRIVE;
 import static ca.team2994.frc.utils.Constants.CAN_RIGHT_REAR_DRIVE;
-import static ca.team2994.frc.utils.Constants.PCM_CAN;
 import static ca.team2994.frc.utils.Constants.DIO_LEFT_ENCODER_A;
 import static ca.team2994.frc.utils.Constants.DIO_LEFT_ENCODER_B;
 import static ca.team2994.frc.utils.Constants.DIO_RIGHT_ENCODER_A;
@@ -18,14 +17,16 @@ import static ca.team2994.frc.utils.Constants.GYRO_PID_D;
 import static ca.team2994.frc.utils.Constants.GYRO_PID_E;
 import static ca.team2994.frc.utils.Constants.GYRO_PID_I;
 import static ca.team2994.frc.utils.Constants.GYRO_PID_P;
+import static ca.team2994.frc.utils.Constants.PCM_CAN;
 import static ca.team2994.frc.utils.Constants.SOLENOID_SHIFTER_CHANNEL1;
 import static ca.team2994.frc.utils.Constants.SOLENOID_SHIFTER_CHANNEL2;
 import static ca.team2994.frc.utils.Constants.getConstantAsDouble;
 import static ca.team2994.frc.utils.Constants.getConstantAsInt;
 import static ca.team2994.robot2017.Subsystems.driveJoystick;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import ca.team2994.frc.controls.ButtonEntry;
 import ca.team2994.frc.controls.EJoystick;
@@ -36,12 +37,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class DriveTrain extends Subsystem {
-	CANTalon leftFrontDrive = new CANTalon(getConstantAsInt(CAN_RIGHT_FRONT_DRIVE));
-	CANTalon leftRearDrive = new CANTalon(getConstantAsInt(CAN_RIGHT_REAR_DRIVE));
-	CANTalon rightFrontDrive = new CANTalon(getConstantAsInt(CAN_LEFT_FRONT_DRIVE));
-	CANTalon rightRearDrive = new CANTalon(getConstantAsInt(CAN_LEFT_REAR_DRIVE));
+	TalonSRX leftFrontDrive = new TalonSRX(getConstantAsInt(CAN_RIGHT_FRONT_DRIVE));
+	TalonSRX leftRearDrive = new TalonSRX(getConstantAsInt(CAN_RIGHT_REAR_DRIVE));
+	TalonSRX rightFrontDrive = new TalonSRX(getConstantAsInt(CAN_LEFT_FRONT_DRIVE));
+	TalonSRX rightRearDrive = new TalonSRX(getConstantAsInt(CAN_LEFT_REAR_DRIVE));
 	
 	Encoder rightDriveEncoder = new Encoder(getConstantAsInt(DIO_RIGHT_ENCODER_A), getConstantAsInt(DIO_RIGHT_ENCODER_B), true);
 	Encoder leftDriveEncoder = new Encoder(getConstantAsInt(DIO_LEFT_ENCODER_A), getConstantAsInt(DIO_LEFT_ENCODER_B), true);
@@ -67,18 +69,60 @@ public class DriveTrain extends Subsystem {
 											getConstantAsInt(SOLENOID_SHIFTER_CHANNEL2));
 	public static DriveTrain instance;
 	
+	public class TalonWrapperSpeedController implements SpeedController {
+		private TalonSRX talon;
+		
+		public TalonWrapperSpeedController (TalonSRX talon) {
+			this.talon = talon;
+		}
+		
+		@Override
+		public void pidWrite(double output) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void set(double speed) {
+			talon.set(ControlMode.PercentOutput, speed);
+		}
+
+		@Override
+		public double get() {
+			return talon.getMotorOutputPercent();
+		}
+
+		@Override
+		public void setInverted(boolean isInverted) {
+			talon.setInverted(isInverted);
+		}
+
+		@Override
+		public boolean getInverted() {
+			return talon.getInverted();
+		}
+
+		@Override
+		public void disable() {
+			this.set(0);
+		}
+
+		@Override
+		public void stopMotor() {
+			this.disable();			
+		}
+	}
+	
 	public static DriveTrain getInstance() {
 		return instance;
 	}
 	
 	public DriveTrain() {
 		// Set the rear drives to follow the left and right front drives
-		leftRearDrive.changeControlMode(TalonControlMode.Follower);
-		leftRearDrive.set(leftFrontDrive.getDeviceID());
-		rightRearDrive.changeControlMode(TalonControlMode.Follower);
-		rightRearDrive.set(rightFrontDrive.getDeviceID());
+		leftRearDrive.set(ControlMode.Follower, leftFrontDrive.getDeviceID());
+		rightRearDrive.set(ControlMode.Follower, rightFrontDrive.getDeviceID());
 
-		robotDrive = new RobotDrive(leftFrontDrive, rightFrontDrive);
+		robotDrive = new RobotDrive(new TalonWrapperSpeedController(leftFrontDrive), new TalonWrapperSpeedController(rightFrontDrive));
 
 		rightDriveEncoder.setDistancePerPulse(0.026);
 		leftDriveEncoder.setDistancePerPulse(0.001);
@@ -135,7 +179,7 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void setBrakeCoast(BrakeCoastStatus brakeOrCoast) {
-		leftRearDrive.enableBrakeMode(brakeOrCoast == BrakeCoastStatus.BRAKE ? true : false);
+		leftRearDrive.setNeutralMode(brakeOrCoast == BrakeCoastStatus.BRAKE ? NeutralMode.Brake : NeutralMode.Coast);
 	}
 	
 	public void setLowGear() {
